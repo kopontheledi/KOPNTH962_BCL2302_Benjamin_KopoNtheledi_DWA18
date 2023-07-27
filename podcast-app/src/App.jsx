@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
-import CardList from "./Components/CardList";
-import './Styles/App.css'
+import CardList from "./Services/CardList";
+import "./Styles/App.css";
 
 function App() {
   const [podcastData, setPodcastData] = useState([]);
@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="podCastSection">
         <CardList
           data={podcastData.slice(0, itemsToShow)}

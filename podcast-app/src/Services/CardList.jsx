@@ -1,9 +1,11 @@
-import Card from "./Card.jsx";
-import '../Styles/CardList.css'
-
+import Card from "../Components/Card.jsx";
+import GenreComponent from "./Genres.jsx";
+import "../Styles/CardList.css";
 
 const CardList = ({ data }) => {
   return (
+    
+     
     <div className="cardlist">
       {data.map((item) => (
         <Card
@@ -13,11 +15,12 @@ const CardList = ({ data }) => {
           description={item.description}
           seasons={item.seasons}
           image={item.image}
-          genres={item.genres}
+          genres={<GenreComponent genreIds={item.genres} />}
           updated={item.updated}
         />
       ))}
     </div>
+    
   );
 };
 

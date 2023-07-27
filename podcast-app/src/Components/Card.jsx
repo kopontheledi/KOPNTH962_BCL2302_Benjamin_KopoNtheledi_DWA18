@@ -3,35 +3,7 @@ import React, { useState, useEffect } from "react";
 function Card(props) {
   const { id, title, description, seasons, image, genres, updated } = props;
   const [genreNames, setGenreNames] = useState([]);
-
   const [showFullDescription, setShowFullDescription] = useState(false);
-
-  const [rating, setRating] = useState(0); // State to keep track of selected rating
-
-  const handleStarClick = (selectedRating) => {
-    setRating(selectedRating);
-  };
-
-  const renderStars = () => {
-    const stars = [];
-    const maxRating = 5;
-
-    for (let i = 1; i <= maxRating; i++) {
-      const starClassName = i <= rating ? "star selected" : "star";
-
-      stars.push(
-        <span
-          key={i}
-          className={starClassName}
-          onClick={() => handleStarClick(i)}
-        >
-          ★
-        </span>
-      );
-    }
-
-    return stars;
-  };
 
   useEffect(() => {
     const fetchGenreNames = async () => {
@@ -63,6 +35,11 @@ function Card(props) {
     }
   };
 
+  const formatUpdatedDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toDateString(); 
+  };
+
   return (
     <div>
       <div className="cards">
@@ -75,8 +52,8 @@ function Card(props) {
           className="card--images"
         />
         <p>Seasons: {seasons}</p>
-        <p>Genres: {Array.isArray(genres) ? genres.join(", ") : genres}</p>
-        <p>Updated: {updated}</p>
+        <p>Genre: {Array.isArray(genres) ? genres.join(", ") : genres}</p>
+        <p>Updated: {formatUpdatedDate(updated)}</p>
         <p>Description: {getDescription()}</p>
         {description.length > 100 && (
           <button onClick={toggleDescription}>
