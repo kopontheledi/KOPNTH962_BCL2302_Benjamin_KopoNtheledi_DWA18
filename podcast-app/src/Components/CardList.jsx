@@ -1,4 +1,5 @@
 import Card from "./Card.jsx";
+import '../Styles/CardList.css'
 
 
 const CardList = ({ data }) => {

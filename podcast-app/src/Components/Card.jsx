@@ -1,11 +1,37 @@
 import React, { useState, useEffect } from "react";
 
-
 function Card(props) {
   const { id, title, description, seasons, image, genres, updated } = props;
   const [genreNames, setGenreNames] = useState([]);
 
   const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const [rating, setRating] = useState(0); // State to keep track of selected rating
+
+  const handleStarClick = (selectedRating) => {
+    setRating(selectedRating);
+  };
+
+  const renderStars = () => {
+    const stars = [];
+    const maxRating = 5;
+
+    for (let i = 1; i <= maxRating; i++) {
+      const starClassName = i <= rating ? "star selected" : "star";
+
+      stars.push(
+        <span
+          key={i}
+          className={starClassName}
+          onClick={() => handleStarClick(i)}
+        >
+          ★
+        </span>
+      );
+    }
+
+    return stars;
+  };
 
   useEffect(() => {
     const fetchGenreNames = async () => {
@@ -38,31 +64,28 @@ function Card(props) {
   };
 
   return (
-    <div  >
+    <div>
       <div className="cards">
-      <h2>{title}</h2>
-      <p>ID: {id}</p>
-      <p>Description: {getDescription()}</p>
-      {description.length > 100 && (
-        <button onClick={toggleDescription}>
-          {showFullDescription ? "Show Less" : "Show More"}
-        </button>
-      )}
-
-      <p>Seasons: {seasons}</p>
-      <img
-        src={image}
-        alt={title}
-        style={{ maxWidth: "200px" }}
-        className="card--images"
-      />
-      <p>Genres: {Array.isArray(genres) ? genres.join(", ") : genres}</p>
-      <p>Updated: {updated}</p>
+        <h2>{title}</h2>
+        <p>ID: {id}</p>
+        <img
+          src={image}
+          alt={title}
+          style={{ maxWidth: "200px" }}
+          className="card--images"
+        />
+        <p>Seasons: {seasons}</p>
+        <p>Genres: {Array.isArray(genres) ? genres.join(", ") : genres}</p>
+        <p>Updated: {updated}</p>
+        <p>Description: {getDescription()}</p>
+        {description.length > 100 && (
+          <button onClick={toggleDescription}>
+            {showFullDescription ? "Show Less" : "Show More"}
+          </button>
+        )}
       </div>
-      
     </div>
   );
 }
 
 export default Card;
-

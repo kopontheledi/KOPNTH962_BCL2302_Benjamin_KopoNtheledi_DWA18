@@ -1,0 +1,28 @@
+.navbar {
+  background-color: darkgrey;
+  padding: 1%;
+  box-shadow: 0 2px 4px rgba(7, 136, 119, 0.5);
+}
+
+.navbar-brand {
+  font-size: 250%;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(238, 242, 242, 1.9);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5%;
+  overflow-x:inherit;
+
+}
+
+.title {
+    padding-right: 69%;
+}
+
+.nav-item {
+   list-style: none; 
+}
+

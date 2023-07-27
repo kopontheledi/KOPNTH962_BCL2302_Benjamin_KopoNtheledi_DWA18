@@ -1,36 +1,36 @@
-import React from 'react';
+import React from "react";
+import "../Styles/Navbar.css";
 
 const Navbar = () => {
+
+
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <a className="navbar-brand" href="/">
-          Podcast App
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <img src="./Images/itunes.png" alt="logo" width="100px" />
+        <div className="title">
+          <h1 className="navbar-brand">KopoStream</h1>
+        </div>
+
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="/">
-                Home
-              </a>
+              <button className="nav-link">Home</button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/favorites">
-                Favorites
-              </a>
+              <img src="./Images/search-engine.png" alt="search" width="50px" />
             </li>
-            {/* Add more navigation links here */}
+            <li className="nav-item">
+              <button className="nav-link">Favorites</button>
+            </li>
+            <li>
+              
+            </li>
+
+            {/* <li></li>
+            <li></li>
+            <li></li> */}
           </ul>
         </div>
       </div>
