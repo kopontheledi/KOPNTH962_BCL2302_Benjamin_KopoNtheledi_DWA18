@@ -21,7 +21,7 @@ const Navbar = () => {
           <li className="nav-item">
             <button className="nav-link">Favorites</button>
           </li>
-          <li></li>
+          
 
           {/* <li></li>
             <li></li>

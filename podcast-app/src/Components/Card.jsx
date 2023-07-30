@@ -44,11 +44,11 @@ function Card(props) {
     <div>
       <div className="cards">
         <h2>{title}</h2>
-        <p>ID: {id}</p>
+        
         <img
           src={image}
           alt={title}
-          style={{ maxWidth: "200px" }}
+          style={{ maxWidth: "80%" }}
           className="card--images"
         />
         <p>Seasons: {seasons}</p>
