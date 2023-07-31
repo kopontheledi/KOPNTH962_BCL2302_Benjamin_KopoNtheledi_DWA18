@@ -1,7 +1,12 @@
+
 import React, { useState, useEffect } from "react";
+import { createClient } from '@supabase/supabase-js'
 
+const supabaseUrl = 'https://lmayjliyulorcummcvae.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-function Card(props) {
+function FavoriteCard(props) {
   const { id, title, description, seasons, image, genres, updated } = props;
   const [genreNames, setGenreNames] = useState([]);
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -41,6 +46,31 @@ function Card(props) {
     return date.toDateString();
   };
 
+  // Function to add the podcast as a favorite
+  const addToFavorites = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("favorites")
+        .insert([
+          {
+            id,
+            title,
+            description,
+            seasons,
+            image,
+            genres,
+            updated,
+          },
+        ]);
+      if (error) {
+        throw new Error("Failed to add to favorites");
+      }
+      console.log("Added to favorites:", data);
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
+    }
+  };
+
   return (
     <div>
       <div className="cards">
@@ -62,9 +92,12 @@ function Card(props) {
             {showFullDescription ? "Show Less" : "Show More"}
           </button>
         )}
+
+        {/* Add a button to add the podcast to favorites */}
+        <button onClick={addToFavorites}> Add to Favorites</button>
       </div>
     </div>
   );
 }
 
-export default Card;
+export default FavoriteCard;
