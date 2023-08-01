@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-
+// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 function Card(props) {
   const { id, title, description, seasons, image, genres, updated } = props;
   const [genreNames, setGenreNames] = useState([]);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  
+
 
   useEffect(() => {
     const fetchGenreNames = async () => {
@@ -62,6 +64,7 @@ function Card(props) {
             {showFullDescription ? "Show Less" : "Show More"}
           </button>
         )}
+          
       </div>
     </div>
   );

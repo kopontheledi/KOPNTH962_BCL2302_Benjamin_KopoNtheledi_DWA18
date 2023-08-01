@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from "react";
-import { createClient } from '@supabase/supabase-js'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+// import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://lmayjliyulorcummcvae.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey);
+// const supabaseUrl = 'https://lmayjliyulorcummcvae.supabase.co'
+// const supabaseKey = process.env.SUPABASE_KEY
+// const supabase = createClient(supabaseUrl, supabaseKey);
 
 function FavoriteCard(props) {
   const { id, title, description, seasons, image, genres, updated } = props;
@@ -94,7 +95,7 @@ function FavoriteCard(props) {
         )}
 
         {/* Add a button to add the podcast to favorites */}
-        <button onClick={addToFavorites}> Add to Favorites</button>
+        <button onClick={addToFavorites}> <ThumbUpIcon /> Add to Favorites</button>
       </div>
     </div>
   );
