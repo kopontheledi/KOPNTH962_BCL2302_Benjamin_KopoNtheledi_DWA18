@@ -1,4 +1,3 @@
-// ShowDetail.js
 import React, { useEffect, useState } from "react";
 
 const ShowDetail = ({ show, onBack }) => {

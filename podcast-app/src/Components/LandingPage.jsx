@@ -1,47 +1,41 @@
-import React, { useState } from 'react';
-import supabase from '../Servises/Supabase'; 
+import React, { useState } from 'react'; 
+import supabase from '../Services/Supabase';
 
 const LandingPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Function to handle sign-in using email and password
-//   const signingIn = async () => {
-//     try {
-//       const { user, error } = await supabase.auth.signIn({
-//         email,
-//         password,
-//       });
-
-//       if (error) {
-//         throw error;
-//       }
-
-//       // Handle successful sign-in here, such as redirecting to the main application page.
-//       console.log('Logged in successfully!');
-//       console.log('User:', user);
-//     } catch (error) {
-//       console.error('Error signing in:', error.message);
-//     }
-//   };
-
-  // Function to handle sign-up using email and password
-  const handleSignUp = async () => {
+  const signIn = async () => {
     try {
-      const { user, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+      const { user, error } = await supabase.auth.signIn({ email, password });
 
       if (error) {
         throw error;
       }
 
-      // Handle successful sign-up here, such as redirecting to the main application page.
+      console.log('Logged in successfully!');
+      console.log('User:', user);
+
+      // Handle successful login here, such as redirecting to the main application page.
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+  const signUp = async () => {
+    try {
+      const { user, error } = await supabase.auth.signUp({ email, password });
+
+      if (error) {
+        throw error;
+      }
+
       console.log('Signed up successfully!');
       console.log('User:', user);
+
+      // Handle successful sign-up here, such as redirecting to the main application page.
     } catch (error) {
-      console.error('Error signing up:', error.message);
+      console.error('Error:', error.message);
     }
   };
 
@@ -67,10 +61,10 @@ const LandingPage = () => {
       />
 
       {/* Login button */}
-      <button onClick={handleSignUp}>Log in</button>
+      <button onClick={signIn}>Log in</button>
 
       {/* Sign-up button */}
-      <button onClick={handleSignUp}>Sign up</button>
+      <button onClick={signUp}>Sign up</button>
     </div>
   );
 };
