@@ -1,22 +1,18 @@
+// App.js
 import React, { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
 import CardList from "./Services/CardList";
+import ShowDetail from "./Services/ShowDetail";
 import Footer from "./Services/Footer";
-import Signup from "./Services/Signup";
-import Login from "./Services/LogIn";
-import LandingPage from "./Components/LandingPage";
+
 
 import "./Styles/App.css";
-
-
 
 function App() {
   const [podcastData, setPodcastData] = useState([]);
   const [itemsToShow, setItemsToShow] = useState(9);
-  const [showSignup, setShowSignup] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
- 
+  const [selectedShow, setSelectedShow] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,8 +23,10 @@ function App() {
         }
         const data = await response.json();
         setPodcastData(data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching podcast data:", error);
+        setIsLoading(false);
       }
     };
 
@@ -39,54 +37,34 @@ function App() {
     setItemsToShow((prevItemsToShow) => prevItemsToShow + 7);
   };
 
- 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleSignupClick = () => {
-    setShowSignup(true);
-    setShowLogin(false);
+  const handleShowClick = (show) => {
+    setSelectedShow(show);
   };
 
-  const handleLoginClick = () => {
-    setShowLogin(true);
-    setShowSignup(false);
-  };
-
-  const handleSignup = () => {
-    // ... (handle successful signup, e.g., set loggedIn state to true)
-    setShowSignup(true);
-  };
-
-  const handleLogin = () => {
-    // ... (handle successful login, e.g., set loggedIn state to true)
-    setLoggedIn(true);
+  const handleBackToAllShows = () => {
+    setSelectedShow(null);
   };
 
   return (
     <div>
-      {/* Pass the necessary props to the Navbar component */}
-      <Navbar/>
-      <div className="podCastSection">
-        {/* Conditionally render the appropriate component based on the state */}
-        {loggedIn ? (
+      <Navbar />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : selectedShow ? (
+        <ShowDetail show={selectedShow} onBack={handleBackToAllShows} />
+      ) : (
+        <div className="podCastSection">
           <CardList
             data={podcastData.slice(0, itemsToShow)}
-
+            onShowClick={handleShowClick}
           />
-        ) : showSignup ? (
-          <Signup onLogin={handleLogin} onSignup={handleSignup} />
-        ) : showLogin ? (
-          <Login onSignup={handleSignup} onLogin={handleLogin} />
-        ) : (
-          <LandingPage
-            handleSignupClick={handleSignupClick}
-            handleLoginClick={handleLoginClick}
-          />
-        )}
-      </div>
-      {itemsToShow < podcastData.length && (
+        </div>
+      )}
+      {itemsToShow < podcastData.length && !selectedShow && (
         <>
           <button onClick={handleShowMore}>More Podcast</button>
           <button className="back-to-top" onClick={scrollToTop}>

@@ -16,9 +16,6 @@ const CardList = ({ data }) => {
           seasons={item.seasons}
           image={item.image}
           genres={<GenreComponent genreIds={item.genres} />}
-          // isFavorite={favorites.includes(item.id)}
-          // onFavoriteClick={() => handleFavoriteClick(item.id)}
-          // updated={item.updated}
           
         />
       ))}
