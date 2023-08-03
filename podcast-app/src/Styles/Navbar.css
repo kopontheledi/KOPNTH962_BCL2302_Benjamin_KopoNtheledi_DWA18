@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
   background-color: darkgrey;
   padding: 1%;
   box-shadow: 0 2px 4px rgba(7, 136, 119, 0.5);
@@ -28,4 +28,33 @@
 .nav-item {
    list-style: none; 
 }
+ */
 
+ .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.nav-link span {
+  margin-left: 5px;
+}

@@ -25,16 +25,17 @@
 }
 
 .grid-container {
-  flex: 1;
   display: grid;
-  background-color: red;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-  padding: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  background-color: rgb(242, 22, 22);
+  overflow-x: scroll;
+  max-width: 1100px;
+  padding: 5%;
+  margin: 0 auto;
 }
 
 /* Add more styling as needed */
-
 
 /* Updated styles for Card */
 .cards {
@@ -43,13 +44,14 @@
   font-size: 15px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: scroll;
   overflow-y: auto;
   padding: 5px;
   word-wrap: break-word;
   background-color: #fff;
   max-width: 250px;
   margin: 10px;
+  max-height: 80%;
 }
 
 .card--images {
@@ -61,23 +63,6 @@
 
 .sort-buttons {
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   gap: 0.5rem;
-}
-
-/* Add media query for responsiveness to iPhone SE */
-@media (max-width: 320px) {
-  .cardlist {
-    padding-left: 2%;
-  }
-
-  .card--images {
-    width: 100%;
-    padding: 10%;
-  }
-
-  .card {
-    max-width: 100%;
-    margin: 5px;
-  }
 }
