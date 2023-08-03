@@ -35,7 +35,26 @@
   margin: 0 auto;
 }
 
-/* Add more styling as needed */
+.genre-filter {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.genre-filter button {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.genre-filter button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
 
 /* Updated styles for Card */
 .cards {

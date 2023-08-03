@@ -1,22 +1,3 @@
-// const FavoritePodcast = () => {
-//   const favoritePodcasts = JSON.parse(localStorage.getItem("favoritePodcasts")) || [];
-//   return (
-//     <div>
-//       <h2>Favorite Podcasts</h2>
-//       {favoritePodcasts.length > 0 ? (
-//         <ul>
-//           {favoritePodcasts.map((podcast) => (
-//             <li key={podcast.id}>{podcast.title}</li>
-//           ))}
-//         </ul>
-//       ) : (
-//         <p>No favorite podcasts yet. Start adding some!</p>
-//       )}
-//     </div>
-//   );
-// };
-// export default FavoritePodcast;
-
 import React, { useState } from "react";
 
 const FavoritePodcast = ({ favoritePodcasts }) => {
@@ -28,7 +9,13 @@ const FavoritePodcast = ({ favoritePodcasts }) => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric" };
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
     return date.toLocaleDateString(undefined, options);
   };
 
@@ -41,14 +28,30 @@ const FavoritePodcast = ({ favoritePodcasts }) => {
       sortedFavorites.sort((a, b) => b.title.localeCompare(a.title));
       break;
     case "asc":
-      sortedFavorites.sort((a, b) => new Date(a.addedDate) - new Date(b.addedDate));
+      sortedFavorites.sort(
+        (a, b) => new Date(a.addedDate) - new Date(b.addedDate)
+      );
       break;
     case "desc":
-      sortedFavorites.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));
+      sortedFavorites.sort(
+        (a, b) => new Date(b.addedDate) - new Date(a.addedDate)
+      );
       break;
     default:
       break;
   }
+
+  const Genre = {
+    1: "Personal Growth",
+    2: "True Crime and Investigative Journalism",
+    3: "History",
+    4: "Comedy",
+    5: "Entertainment",
+    6: "Business",
+    7: "Fiction",
+    8: "News",
+    9: "Kids and Family",
+  };
 
   return (
     <div>
@@ -56,16 +59,30 @@ const FavoritePodcast = ({ favoritePodcasts }) => {
       <div className="sort-buttons">
         <button onClick={() => handleSort("az")}>Sort A-Z</button>
         <button onClick={() => handleSort("za")}>Sort Z-A</button>
-        <button onClick={() => handleSort("asc")}>Sort by Date Ascending</button>
-        <button onClick={() => handleSort("desc")}>Sort by Date Descending</button>
+        <button onClick={() => handleSort("asc")}>
+          Sort by Date Ascending
+        </button>
+        <button onClick={() => handleSort("desc")}>
+          Sort by Date Descending
+        </button>
       </div>
       {sortedFavorites.length > 0 ? (
         <ul>
           {sortedFavorites.map((podcast) => (
             <li key={podcast.id}>
               <strong>{podcast.title}</strong>
-              
-              <br />
+              <img
+                src={podcast.image}
+                className="card--images"
+                alt="Podcast"
+                width="50%"
+              />
+              <p>Seasons: {podcast.seasons}</p>
+              <p>
+                Genres: {podcast.genres.map((genre) => Genre[genre]).join(", ")}
+              </p>
+              <p>Updated: {podcast.updated}</p>
+              {console.log(podcast)}
               Added on: {formatDate(podcast.addedDate)}
             </li>
           ))}
@@ -73,7 +90,6 @@ const FavoritePodcast = ({ favoritePodcasts }) => {
       ) : (
         <p>No favorite podcasts yet. Start adding some!</p>
       )}
-      
     </div>
   );
 };
