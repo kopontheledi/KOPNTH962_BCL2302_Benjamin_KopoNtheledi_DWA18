@@ -1,73 +1,107 @@
-import React, { useState, useEffect } from "react";
-// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-
-function Card(props) {
-  const { id, title, description, seasons, image, genres, updated } = props;
-  const [genreNames, setGenreNames] = useState([]);
-  const [showFullDescription, setShowFullDescription] = useState(false);
-  
 
 
-  useEffect(() => {
-    const fetchGenreNames = async () => {
-      try {
-        const response = await fetch(`https://podcast-api.netlify.app/shows`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch genre names");
-        }
-        const data = await response.json();
-        // Assuming that the fetched data contains an array of genre names
-        setGenreNames(data.genres);
-      } catch (error) {
-        console.error("Error fetching genre names:", error);
-      }
-    };
+// import React, { useState } from "react";
+// import StarIcon from "@mui/icons-material/Star";
+// import StarBorderIcon from "@mui/icons-material/StarBorder";
 
-    fetchGenreNames();
-  }, []); // Empty dependency array to run the effect only once on mount
+// export default function Card(props) {
 
-  const toggleDescription = () => {
-    setShowFullDescription((prevState) => !prevState);
+//   const [isFavorite, setIsFavorite] = useState(props.isFavorite);
+//   const handleExpandClick = () => {
+//     if (!props.isFavorite) {
+//       props.onExpandClick();
+//     }
+//   };
+
+//   const handleFavoriteClick = (event) => {
+//     event.stopPropagation(); // Prevent the click event from bubbling to the container div
+//     setIsFavorite(!isFavorite);
+//     props.onFavoriteClick();
+//   };
+
+//   const truncateDescription = (description) => {
+//     if (description.length <= 100) return description;
+//     return isExpanded ? description : description.slice(0, 100) + "...";
+//   };
+
+//   return (
+//     <div>
+//       <h2>{props.titles}</h2>
+//       <img src={props.images} className="images" alt="Podcast" />
+//       <p>Seasons: {props.season}</p>
+//       <p>Genres: {props.genre}</p>
+//       <p>Updated: {props.updates}</p>
+//       {/* Favorite star icon */}
+//       {isFavorite ? (
+//         <StarIcon className="star" onClick={handleFavoriteClick} />
+//       ) : (
+//         <StarBorderIcon className="star" onClick={handleFavoriteClick} />
+//       )}
+//       {/* Show more/ show less */}
+//       <p>{truncateDescription(props.descriptions)}</p>
+//       {props.descriptions.length > 100 && (
+//         <div>
+//           {isExpanded ? (
+//             <button onClick={handleExpandClick}>Show Less</button>
+//           ) : (
+//             <button onClick={handleExpandClick}>Show More</button>
+//           )}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+import React, { useState } from "react";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+
+export default function Card(props) {
+  const [isFavorite, setIsFavorite] = useState(props.isFavorite);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleExpandClick = () => {
+    setIsExpanded(!isExpanded);
   };
 
-  const getDescription = () => {
-    if (showFullDescription || description.length <= 100) {
-      return description;
-    } else {
-      return description.slice(0, 100) + "...";
-    }
+  const handleFavoriteClick = (event) => {
+    event.stopPropagation(); // Prevent the click event from bubbling to the container div
+    setIsFavorite(!isFavorite);
+    props.onFavoriteClick();
   };
 
-  const formatUpdatedDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toDateString();
+  const truncateDescription = (description) => {
+    if (description.length <= 100) return description;
+    return isExpanded ? description : description.slice(0, 100) + "...";
   };
 
   return (
-    <div>
-      <div className="cards">
-        <h2>{title}</h2>
-
-        <img
-          src={image}
-          alt={title}
-          style={{ maxWidth: "80%" }}
-          className="card--images"
-        />
-
-        <p>Seasons: {seasons}</p>
-        <p>Genre: {Array.isArray(genres) ? genres.join(", ") : genres}</p>
-        <p>Updated: {formatUpdatedDate(updated)}</p>
-        <p>Description: {getDescription()}</p>
-        {description.length > 100 && (
-          <button onClick={toggleDescription}>
-            {showFullDescription ? "Show Less" : "Show More"}
-          </button>
-        )}
-          
-      </div>
+    <div className="cards">
+      <h2>{props.titles}</h2>
+      <img src={props.images} className="images" alt="Podcast" width="30%" />
+      <p>Seasons: {props.season}</p>
+      <p>Genres: {props.genre}</p>
+      <p>Updated: {props.updates}</p>
+      {/* Favorite star icon */}
+      {isFavorite ? (
+        <StarIcon className="star" onClick={handleFavoriteClick} />
+      ) : (
+        <StarBorderIcon className="star" onClick={handleFavoriteClick} />
+      )}
+      {/* Show more/ show less */}
+      <p>{truncateDescription(props.descriptions)}</p>
+      {props.descriptions.length > 100 && (
+        <div>
+          {isExpanded ? (
+            <button onClick={handleExpandClick}>Show Less</button>
+          ) : (
+            <button onClick={handleExpandClick}>Show More</button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
-export default Card;
+
+

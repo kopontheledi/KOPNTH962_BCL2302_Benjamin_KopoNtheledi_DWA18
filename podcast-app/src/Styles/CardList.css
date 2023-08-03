@@ -1,46 +1,83 @@
-.cardlist {
-  display: flex;
+/* Updated styles for CardList */
+/* .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
-  /* background-color: rgb(242, 22, 22); */
-  flex-wrap: wrap;
+  background-color: rgb(242, 22, 22);
   overflow-x: scroll;
-  width: 1100px;
+  max-width: 1100px;
   padding-left: 5%;
+  margin: 0 auto;
+} */
+
+/* CardList.css */
+
+/* .main-container {
+ max-width: ;
+} */
+
+.side-bar {
+  width: 250px;
+  padding: 16px;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
 }
 
-.card--images {
-    padding: 5%;
-    padding-left: 8%;
+.grid-container {
+  flex: 1;
+  display: grid;
+  background-color: red;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 16px;
 }
 
+/* Add more styling as needed */
+
+
+/* Updated styles for Card */
 .cards {
-  display: inline-block;
   /* border: 3px solid black; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
-  width: 300px;
-  height: 550px;
   font-size: 15px;
-  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   overflow-y: auto;
   padding: 5px;
   word-wrap: break-word;
+  background-color: #fff;
+  max-width: 250px;
+  margin: 10px;
 }
 
-.back-to-top:hover {
-  background-color: #0056b3;
+.card--images {
+  padding: 5%;
+  padding-left: 8%;
+  width: 80%;
+  margin: 0 auto;
 }
 
-.star {
-    cursor: pointer;
-    color: #ccc;
-    font-size: 1.5rem;
-    margin-right: 5px;
+.sort-buttons {
+  display: flex;
+  justify-content:space-evenly;
+  gap: 0.5rem;
+}
+
+/* Add media query for responsiveness to iPhone SE */
+@media (max-width: 320px) {
+  .cardlist {
+    padding-left: 2%;
   }
-  
-  .star.selected {
-    color: yellow;
+
+  .card--images {
+    width: 100%;
+    padding: 10%;
   }
-  
+
+  .card {
+    max-width: 100%;
+    margin: 5px;
+  }
+}
