@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Card from "../Components/Card";
 import Fuse from "fuse.js";
 import NavBar from "../Components/Navbar";
+import Hero from "./Hero";
 import FavoritePodcast from "./FavouritePodcast";
 import "../Styles/CardList.css";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
@@ -25,10 +26,10 @@ const CardList = () => {
   const handleBackToTopClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  
   const [isLoading, setIsLoading] = useState(true);
   const [podcastData, setPodcastData] = useState([]);
   const [numPodcastsToShow, setNumPodcastsToShow] = useState(9);
-  const [expandedPosterId, setExpandedPosterId] = useState(null);
   const [sortOption, setSortOption] = useState("");
   const [filterText, setFilterText] = useState("");
   const [filteredPodcasts, setFilteredPodcasts] = useState([]);
@@ -36,6 +37,7 @@ const CardList = () => {
   const [showFavorites, setShowFavorites] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState("all");
 
+ 
 
   useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
@@ -55,19 +57,7 @@ const CardList = () => {
     setNumPodcastsToShow(numPodcastsToShow + 9);
   };
 
-  // // Search podcasts using Fuse.js
-  // useEffect(() => {
-  //   if (!filterText) {
-  //     setFilteredPodcasts(podcastData);
-  //   } else {
-  //     const options = {
-  //       keys: ["title", "description", "genres"],
-  //     };
-  //     const fuse = new Fuse(podcastData, options);
-  //     const result = fuse.search(filterText);
-  //     setFilteredPodcasts(result.map((item) => item.item));
-  //   }
-  // }, [filterText, podcastData]);
+  
 
   useEffect(() => {
     if (!filterText) {
@@ -181,15 +171,7 @@ const CardList = () => {
       ) : (
         <div>
           <div className="sort-buttons">
-            <button onClick={() => handleSort("az")}>Sort A-Z</button>
-            <button onClick={() => handleSort("za")}>Sort Z-A</button>
-            <button onClick={() => handleSort("asc")}>Sort Ascending</button>
-            <button onClick={() => handleSort("desc")}>Sort Descending</button>
-          </div>
-
-
-          <div className="search-box">
-          <IconButton>
+          <IconButton className="search-box">
           <SearchOutlinedIcon />
         </IconButton>
             <input
@@ -198,11 +180,8 @@ const CardList = () => {
               onChange={(e) => setFilterText(e.target.value)}
               placeholder="Filter by title"
             />
-           
-          </div>
 
-          <div className="genre-filter">
-  <label htmlFor="genre-select">Filter by Genre: </label>
+<label htmlFor="genre-select" className="genre-filter">Filter by Genre: </label>
   <select
     id="genre-select"
     value={selectedGenre}
@@ -215,9 +194,16 @@ const CardList = () => {
       </option>
     ))}
   </select>
-</div>
 
+            <button onClick={() => handleSort("az")}>Sort A-Z</button>
+            <button onClick={() => handleSort("za")}>Sort Z-A</button>
+            <button onClick={() => handleSort("asc")}>Sort Ascending</button>
+            <button onClick={() => handleSort("desc")}>Sort Descending</button>
+          </div>
 
+         
+
+<Hero />
 
           <div className="grid-container">
             {isLoading ? (
@@ -226,7 +212,7 @@ const CardList = () => {
               displayedPodcasts
                 .slice(0, numPodcastsToShow)
                 .map((podcast) => (
-                  <Card
+                  <Card 
                     key={podcast.id}
                     id={podcast.id}
                     titles={podcast.title}
@@ -238,8 +224,7 @@ const CardList = () => {
                       "unknown"
                     }
                     updates={formatDate(podcast.updated)}
-                    isExpanded={expandedPosterId === podcast.id}
-                    onExpandClick={() => toggleExpand(podcast.id)}
+                  
                     isFavorite={favorites.includes(podcast.id)}
                     onFavoriteClick={() => favoriteToggleHandler(podcast.id)}
                   />

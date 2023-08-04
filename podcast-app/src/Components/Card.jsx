@@ -6,6 +6,7 @@ export default function Card(props) {
   const [isFavorite, setIsFavorite] = useState(props.isFavorite);
   const [isExpanded, setIsExpanded] = useState(false);
 
+
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
   };
@@ -48,6 +49,3 @@ export default function Card(props) {
     </div>
   );
 }
-
-
-
