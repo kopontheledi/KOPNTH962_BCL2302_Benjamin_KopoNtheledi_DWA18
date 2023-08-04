@@ -1,15 +1,14 @@
-
 import { useState, useEffect } from "react";
 import Card from "../Components/Card";
 import Fuse from "fuse.js";
 import NavBar from "../Components/Navbar";
-import Hero from "./Hero";
+import Hero  from "./Hero";
 import FavoritePodcast from "./FavouritePodcast";
 import "../Styles/CardList.css";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import { IconButton } from "@mui/material";
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+
 const Genre = {
   1: "Personal Growth",
   2: "True Crime and Investigative Journalism",
@@ -55,23 +54,24 @@ const CardList = () => {
       // If filterText is empty, show podcasts based on the selected genre filter
       if (selectedGenre) {
         const filteredByGenre = podcastData.filter(
-          (podcast) => selectedGenre === "all" ||
-          podcast.genres.includes(Number(selectedGenre))
-      );
-      setFilteredPodcasts(filteredByGenre);
+          (podcast) =>
+            selectedGenre === "all" ||
+            podcast.genres.includes(Number(selectedGenre))
+        );
+        setFilteredPodcasts(filteredByGenre);
+      } else {
+        setFilteredPodcasts(podcastData);
+      }
     } else {
-      setFilteredPodcasts(podcastData);
+      // Search podcasts using Fuse.js with the title, description, and genres keys
+      const options = {
+        keys: ["title", "description", "genres"],
+      };
+      const fuse = new Fuse(podcastData, options);
+      const result = fuse.search(filterText);
+      setFilteredPodcasts(result.map((item) => item.item));
     }
-  } else {
-    // Search podcasts using Fuse.js with the title, description, and genres keys
-    const options = {
-      keys: ["title", "description", "genres"],
-    };
-    const fuse = new Fuse(podcastData, options);
-    const result = fuse.search(filterText);
-    setFilteredPodcasts(result.map((item) => item.item));
-  }
-}, [filterText, podcastData, selectedGenre]);
+  }, [filterText, podcastData, selectedGenre]);
   // Sort podcasts based on the selected option
   const handleSort = (option) => {
     setSortOption(option);
@@ -151,34 +151,34 @@ const CardList = () => {
       ) : (
         <div>
           <div className="sort-buttons">
-          <IconButton className="search-box">
-          <SearchOutlinedIcon />
-        </IconButton>
+            <IconButton className="search-box">
+              
+            </IconButton>
             <input
               type="text"
               value={filterText}
               onChange={(e) => setFilterText(e.target.value)}
-              placeholder="Filter by title"
+              placeholder="Search By Title"
             />
-<label htmlFor="genre-select" className="genre-filter">Filter by Genre: </label>
-  <select
-    id="genre-select"
-    value={selectedGenre}
-    onChange={(e) => setSelectedGenre(e.target.value)}
-  >
-    <option value="">All Genres</option>
-    {Object.entries(Genre).map(([id, genre]) => (
-      <option key={id} value={id}>
-        {genre}
-      </option>
-    ))}
-  </select>
+            
+            <select
+              id="genre-select"
+              value={selectedGenre}
+              onChange={(e) => setSelectedGenre(e.target.value)}
+            >
+              <option value="">All Genres</option>
+              {Object.entries(Genre).map(([id, genre]) => (
+                <option key={id} value={id}>
+                  {genre}
+                </option>
+              ))}
+            </select>
             <button onClick={() => handleSort("az")}>Sort A-Z</button>
             <button onClick={() => handleSort("za")}>Sort Z-A</button>
             <button onClick={() => handleSort("asc")}>Sort Ascending</button>
             <button onClick={() => handleSort("desc")}>Sort Descending</button>
           </div>
-<Hero />
+          <Hero />
           <div className="grid-container">
             {isLoading ? (
               <p>Loading...</p>
@@ -225,5 +225,3 @@ const CardList = () => {
   );
 };
 export default CardList;
-
-

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../Styles/Hero.css";
-import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 
 export default function Hero() {
   const [shows, setShows] = useState([]);
@@ -24,29 +22,25 @@ export default function Hero() {
       });
   }, []);
 
-  const moveCarousel = (steps) => {
-    const newPosition = carouselPosition + steps * slideWidth * slidesToShow;
-    setCarouselPosition(Math.max(-(containerWidth - slideWidth * slidesToShow), Math.min(0, newPosition)));
-  };
+  useEffect(() => {
+    // Move the carousel continuously like a marquee
+    const interval = setInterval(() => {
+      const newPosition = carouselPosition - slideWidth;
+      setCarouselPosition((prevPosition) =>
+        prevPosition <= -containerWidth + slideWidth * slidesToShow
+          ? 0
+          : newPosition
+      );
+    }, 1000); // Adjust the interval speed as needed (in milliseconds)
 
-  let interval;
-  const handleBackwardMouseDown = () => {
-    clearInterval(interval);
-    interval = setInterval(() => moveCarousel(1), 100);
-  };
-
-  const handleForwardMouseDown = () => {
-    clearInterval(interval);
-    interval = setInterval(() => moveCarousel(-1), 100);
-  };
-
-  const handleMouseUp = () => {
-    clearInterval(interval);
-  };
+    return () => {
+      clearInterval(interval);
+    };
+  }, [carouselPosition, containerWidth, slideWidth, slidesToShow]);
 
   return (
     <div className="hero-section">
-      <div className="carousel-container" >
+      <div className="carousel-container">
         <div
           className="show-info"
           style={{
@@ -62,18 +56,6 @@ export default function Hero() {
           ))}
         </div>
       </div>
-
-      <ArrowBackIosNewOutlinedIcon 
-        className="arrow-icon backward"
-        onMouseDown={handleBackwardMouseDown}
-        onMouseUp={handleMouseUp}
-      />
-
-      <ArrowForwardIosOutlinedIcon 
-        className="arrow-icon forward"
-        onMouseDown={handleForwardMouseDown}
-        onMouseUp={handleMouseUp}
-      />
     </div>
   );
 }
