@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import Card from "../Components/Card";
 import Fuse from "fuse.js";
@@ -9,7 +10,6 @@ import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import { IconButton } from "@mui/material";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
 const Genre = {
   1: "Personal Growth",
   2: "True Crime and Investigative Journalism",
@@ -21,12 +21,10 @@ const Genre = {
   8: "News",
   9: "Kids and Family",
 };
-
 const CardList = () => {
   const handleBackToTopClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  
   const [isLoading, setIsLoading] = useState(true);
   const [podcastData, setPodcastData] = useState([]);
   const [numPodcastsToShow, setNumPodcastsToShow] = useState(9);
@@ -36,9 +34,6 @@ const CardList = () => {
   const [favorites, setFavorites] = useState([]);
   const [showFavorites, setShowFavorites] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState("all");
-
- 
-
   useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
@@ -51,14 +46,10 @@ const CardList = () => {
         setIsLoading(false);
       });
   }, []);
-
   // Function to load the next set of podcasts
   const handleShowMoreClick = () => {
     setNumPodcastsToShow(numPodcastsToShow + 9);
   };
-
-  
-
   useEffect(() => {
     if (!filterText) {
       // If filterText is empty, show podcasts based on the selected genre filter
@@ -81,8 +72,6 @@ const CardList = () => {
     setFilteredPodcasts(result.map((item) => item.item));
   }
 }, [filterText, podcastData, selectedGenre]);
-  
-
   // Sort podcasts based on the selected option
   const handleSort = (option) => {
     setSortOption(option);
@@ -109,19 +98,16 @@ const CardList = () => {
     }
     setFilteredPodcasts(sortedPodcasts);
   };
-
   // Format the date to a human-readable format
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString(undefined, options);
   };
-
   // // Toggle the expanded state of a podcast description
   // const toggleExpand = (podcastId) => {
   //   setExpandedPosterId((prevState) => (prevState === podcastId ? null : podcastId));
   // };
-
   // Add/remove podcasts from favorites
   const favoriteToggleHandler = (podcastId) => {
     setFavorites((prevFavorites) =>
@@ -137,32 +123,26 @@ const CardList = () => {
       )
     );
   };
-
   // Show only favorite podcasts
   const handleShowFavoritesClick = () => {
     setShowFavorites(true);
   };
-
   // Show all podcasts
   const handleShowAllClick = () => {
     setShowFavorites(false);
   };
-
   // Filter the podcasts based on the showFavorites state
   const favoritePodcasts = podcastData.filter((podcast) =>
     favorites.includes(podcast.id)
   );
   const displayedPodcasts = showFavorites ? favoritePodcasts : filteredPodcasts;
-
   // Store favorites in local storage whenever it changes
   useEffect(() => {
     localStorage.setItem("favoritePodcasts", JSON.stringify(favorites));
   }, [favorites]);
-
   const toggleView = () => {
     setShowFavorites((prev) => !prev);
   };
-
   return (
     <div>
       <NavBar onToggleView={toggleView} />
@@ -180,7 +160,6 @@ const CardList = () => {
               onChange={(e) => setFilterText(e.target.value)}
               placeholder="Filter by title"
             />
-
 <label htmlFor="genre-select" className="genre-filter">Filter by Genre: </label>
   <select
     id="genre-select"
@@ -194,17 +173,12 @@ const CardList = () => {
       </option>
     ))}
   </select>
-
             <button onClick={() => handleSort("az")}>Sort A-Z</button>
             <button onClick={() => handleSort("za")}>Sort Z-A</button>
             <button onClick={() => handleSort("asc")}>Sort Ascending</button>
             <button onClick={() => handleSort("desc")}>Sort Descending</button>
           </div>
-
-         
-
 <Hero />
-
           <div className="grid-container">
             {isLoading ? (
               <p>Loading...</p>
@@ -212,7 +186,7 @@ const CardList = () => {
               displayedPodcasts
                 .slice(0, numPodcastsToShow)
                 .map((podcast) => (
-                  <Card 
+                  <Card
                     key={podcast.id}
                     id={podcast.id}
                     titles={podcast.title}
@@ -224,7 +198,6 @@ const CardList = () => {
                       "unknown"
                     }
                     updates={formatDate(podcast.updated)}
-                  
                     isFavorite={favorites.includes(podcast.id)}
                     onFavoriteClick={() => favoriteToggleHandler(podcast.id)}
                   />
@@ -238,7 +211,6 @@ const CardList = () => {
               </IconButton>
             </div>
           )}
-
           {numPodcastsToShow > 9 && (
             <div className="back-to-top-button">
               <ArrowCircleUpIcon
@@ -252,5 +224,6 @@ const CardList = () => {
     </div>
   );
 };
-
 export default CardList;
+
+

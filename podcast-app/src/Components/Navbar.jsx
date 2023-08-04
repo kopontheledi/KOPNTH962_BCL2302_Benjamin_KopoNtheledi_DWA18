@@ -86,17 +86,26 @@ import IconButton from "@mui/material/IconButton";
 const Navbar = ({onToggleView}) => {
   return (
     <nav className="navbar">
+      
       <div className="nav-left">
-        <IconButton aria-label="home" onClick={onToggleView}>
-          <HomeIcon />
-          <span>Home</span>
-        </IconButton>
+        
+          <IconButton >
+            <HomeIcon />
+            {/* <span>Home</span> */}
+            <button onClick={onToggleView}>Home</button>
+          </IconButton>
+       
 
         {/* Use Link component for "Liked Podcasts" link */}
-        <IconButton aria-label="favorites" onClick={onToggleView}>
-          <FavoriteIcon />
-          <span>Liked Podcasts</span>
-        </IconButton>
+        
+          <IconButton >
+            <FavoriteIcon />
+            {/* <span>Liked Podcasts</span> */}
+            <button onClick={onToggleView}>View Favorites</button>
+          </IconButton>
+          
+      
+        
       </div>
 
       <div className="nav-center">

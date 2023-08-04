@@ -1,42 +1,10 @@
-/* .navbar {
-  background-color: darkgrey;
-  padding: 1%;
-  box-shadow: 0 2px 4px rgba(7, 136, 119, 0.5);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-brand {
-  font-size: 250%;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(238, 242, 242, 1.9);
-}
-
-.container {
-  display: flex;
-  justify-content:space-evenly;
-  padding-right: 5%;
-}
-
-.logo {
-    display: flex;
-    align-items:center;
-}
-
-
-.nav-item {
-   list-style: none; 
-}
- */
-
  .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #defcf9;
   padding: 10px;
-}
+ }
 
 
 
